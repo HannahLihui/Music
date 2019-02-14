@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tycoding.mapper.MusicMapper">
+
+    <resultMap id="baseMap" type="cn.tycoding.entity.Music">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="num" column="num" jdbcType="VARCHAR"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="singer" column="singer" jdbcType="VARCHAR"/>
+        <result property="brand" column="brand" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="cn.tycoding.entity.Music">
+        SELECT * FROM music
+    </select>
+
+    <!-- 条件查询 -->
+    <select id="findByPage" parameterType="cn.tycoding.entity.Music" resultMap="baseMap">
+        SELECT * FROM music WHERE 1=1
+        <if test="singer != null">
+            AND singer LIKE CONCAT('%', #{singer}, '%')
+        </if>
+        <if test="brand != null">
+            AND brand LIKE CONCAT('%', #{brand}, '%')
+        </if>
+    </select>
+
+    <!-- 根据id查询 -->
+    <select id="findById" parameterType="Long" resultMap="baseMap">
+        SELECT * FROM Music WHERE id = #{id}
+    </select>
+
+    <!-- 添加数据 -->
+    <insert id="create" parameterType="cn.tycoding.entity.Music">
+        INSERT INTO music(name, singer, img, brand)
+        VALUES(#{name}, #{singer}, #{img}, #{brand})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="cn.tycoding.entity.Music">
+        UPDATE music set
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="brand != null">
+                brand = #{brand},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM music WHERE id = #{id}
+    </delete>
+     <select id="findByName" parameterType="String" resultType="cn.tycoding.entity.Music">
+        SELECT * FROM music where name=#{name}
+    </select>
+     <select id="findByBranc" parameterType="String" resultType="cn.tycoding.entity.Music">
+        SELECT * FROM music where brand like CONCAT('%',#{brand},'%')  
+    </select>
+
+</mapper>

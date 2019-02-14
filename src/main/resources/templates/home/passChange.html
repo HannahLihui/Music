@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/login.css}">
+    <link rel="stylesheet" th:href="@{../../lib/font/icon/iconfont.css}">
+</head>
+<body>
+
+<div id="app">
+    <div id="login">
+        <el-main id="main">
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col :span="5">
+                    <el-card class="box-card">
+                        <div solt="header" class="header">
+                            <span class="item">修改密码</span>
+                        </div>
+                        <div id="form">
+                            <!-- 注册表单 -->
+                            <el-form :model="passChange" status-icon ref="passChange">
+                                
+                                <el-form-item prop="password"
+                                              :rules="[{ required: true, message: '密码不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-mima" type="password" v-model="passChange.password"
+                                              auto-complete="off" placeholder="修改密码"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="repassword"
+                                              :rules="[{ required: true, message: '请再次输入密码'}]">
+                                    <el-input prefix-icon="el-icon-ump-anquan" v-model="passChange.repassword"
+                                              @keyup.enter.native="registerEnter('passChange')"
+                                              auto-complete="off" placeholder="再次确认修改密码"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button class="btn" type="primary" @click="submitForm('passChange')">提交</el-button>
+                                </el-form-item>
+                            </el-form>
+                           
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<!--<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>-->
+<!-- 核心js代码 -->
+<script type="text/javascript" th:src="@{../../js/passChange.js}"></script>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.tycoding.mapper.MessageMapper">
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="cn.tycoding.entity.Message">
+        SELECT * FROM mcomment
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="findById" resultType="cn.tycoding.entity.Message" parameterType="Long">
+        SELECT * FROM mcomment WHERE ownerId = #{id}
+    </select>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="cn.tycoding.entity.Message">
+        INSERT INTO mcomment(date, ownerId,fromName,content,likeNum) VALUES (now(), #{ownerId},#{fromName},#{content},0)
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM mcomment WHERE id = #{id}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="cn.tycoding.entity.Message">
+        UPDATE mcomment 
+        <set>
+        <if test="date!= null">
+            date = #{date},
+          </if>
+        <if test="content!=null">
+          content = #{content},
+        </if>
+       </set>
+       where ownerId = #{ownerId}
+    </update>
+
+   
+    
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tycoding.mapper.NewsMapper">
+
+    <resultMap id="baseMap" type="cn.tycoding.entity.News">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="new_date" column="new_date" jdbcType="DATE"/>
+    </resultMap>
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="cn.tycoding.entity.News">
+        SELECT * FROM news
+    </select>
+
+    <!-- 根据id查询 -->
+    <select id="findById" parameterType="Long" resultMap="baseMap">
+        SELECT * FROM News WHERE id = #{id}
+    </select>
+
+    <!-- 添加数据 -->
+    <insert id="create" parameterType="cn.tycoding.entity.News">
+        INSERT INTO news(title, content, img, new_date)
+        VALUES(#{title}, #{content}, #{img}, #{new_date})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="cn.tycoding.entity.News">
+        UPDATE news
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="new_date != null">
+                new_date = #{new_date},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM news WHERE id = #{id}
+    </delete>
+
+</mapper>

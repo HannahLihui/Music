@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../css/index.css}"/>
+</head>
+<style>
+.show {
+    width: 261px;
+    height: 326px;
+    display: inline-block;
+    margin: 2px 5px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.show .img > img {
+    border-bottom: 1px solid #eee;
+    /*border-radius: 100%;*/
+    box-sizing: border-box;
+    height: 400px;
+    /*margin: 0 8px 0 10px;*/
+    padding: 2px;
+    width: 150px;
+}
+
+.show .price > span {
+    color: #F40;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.show .title {
+    margin-top: 10px;
+    font-size: 10px;
+    padding: 0 5px;
+}
+
+.el-footer {
+    background-color:#F6CEE3;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
+  
+  .el-aside {
+    background-color:#FAAC58;
+  
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+  
+  .el-main {
+    background-color: #F8E0F1;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+  }
+  
+  body > .el-container {
+    margin-bottom: -40px;
+  }
+
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 10px;
+  }
+  
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+  }
+</style>
+<body>
+
+<div id="app">
+  <el-container>
+  <el-header>
+      <!-- header -->
+    <el-menu mode="horizontal" >
+        <el-menu-item index="0" id="logo">音乐管理系统</el-menu-item>
+     
+        <el-menu-item id="author" index="3">
+           
+            <el-dropdown>
+                  <span class="el-dropdown-link">个人中心<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>首页</el-dropdown-item>
+                   <el-button type="text" @click="open3">修改密码</el-button>
+                    <el-dropdown-item divided><a href="/logout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+  </el-header>
+  <!-- 搜索框 -->
+  <div style="margin-top: 50px;">
+                <el-form :inline="true" :model="searchEntity" class="demo-form-inline">
+                    <el-form-item label="搜索">
+                        <el-input v-model="musicSearch" placeholder="搜索音乐"></el-input>
+                    </el-form-item>
+                   
+                    <el-form-item>
+                        <el-button
+                                type="primary"
+                                icon="el-icon-search"
+                                @click="searchMusic()">查询
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+                 <!-- search-sort -->
+        <div class="sort">
+            <el-row :gutter="20">
+                <el-col :span="20" :offset="2">
+                    <el-card class="box-card">
+                        <div class="waring">
+                            <div>
+                                <el-form label-width="80px">
+                
+                                    <el-form-item label="品牌:">
+                                        <div>
+                                            <el-radio-group :max="1" v-model="brand" @change="selectMethod">
+                                                <el-radio v-for="classify in classifyData.brand" :label="classify" border size="mini">{{classify}}</el-radio>
+                                            </el-radio-group>
+                                        </div>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
+         </div>
+  <el-container height="1000px">
+    <el-aside width="300px" height="1000px">
+    <div class="block">
+    
+    <el-carousel trigger="click" height="600px"  >
+      <el-carousel-item v-for="(item,index) in news" :key="index" >
+        <span>{{ item.content }}</span>
+        <div class="img"  style="height: 100px;">
+         <img :src="item.img" />
+         <h3>{{ item.date }}</h3>
+        
+        
+         </div>
+      </el-carousel-item>
+     
+    </el-carousel>
+  </div>
+    </el-aside>
+    
+    <el-container>
+     <el-header style="color: #333;
+    text-align: center;">
+   
+      <el-row>
+         <el-col :span="4">
+        <el-popover
+        placement="top-start"
+        trigger="hover">
+          <div style="text-align: center">
+            <el-progress 
+            color="#67C23A"
+            type="circle" 
+            :percentage="music.volume"></el-progress><br>
+            <el-button 
+            @click="changeVolume(-10)"
+            icon="el-icon-minus" 
+            circle></el-button>
+            <el-button 
+            @click="changeVolume(10)"
+            icon="el-icon-plus" 
+            circle></el-button>
+          </div>
+          <el-button 
+          @click="play"
+          id="play"
+          slot="reference"
+          :icon="music.isPlay?'el-icon-refresh':'el-icon-caret-right'" 
+          circle></el-button>
+        </el-popover>
+      </el-col>
+      <el-col :span="14"  style="padding-left: 20px">
+        <el-slider
+        @change="changeTime"
+        :format-tooltip="formatTime"
+        :max="music.maxTime"
+        v-model="music.currentTime" 
+        style="width: 100%; color:#000"></el-slider>
+      </el-col>
+      <el-col :span="6" style="padding: 9px 0px 0px 10px;color:#909399;font-size: 13px">
+        {{formatTime(music.currentTime)}}/{{formatTime(music.maxTime)}}
+      </el-col>
+   </el-row>
+     <audio ref="music" loop autoplay> 
+      <source src="http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3" type="audio/mpeg">
+    </audio>
+      <el-main>
+        <el-row :gutter="10">
+            <el-col :span="22" :offset="1">
+                <el-container>
+                    <div>
+                        <div class="show" v-for="(item,index) in mymusic" :key="index" style="height:300px;width:300px">
+                           <div class="img" style="height:100px;width:100px">
+                             
+                           <a   :href="'/play?id='+item.id"> 
+                            <span v-html="item.name"></span><img :src="item.img"/></a>
+                             </div>
+                          
+                             <el-button 
+            @click="download()"
+            icon="el-icon-plus" 
+            circle>下载</el-button>
+  
+      </el-header>
+                              
+                            </div>
+                            
+                        </div>
+                    </div>
+                </el-container>
+            </el-col>
+        </el-row>
+       
+  <el-table
+    ref="mymusic"
+    :data="mymusic"
+    border
+    tooltip-effect="dark"
+    style="width: 100%"
+     align="center"
+     sortable
+      fixed
+    >
+  
+    <el-table-column
+      prop="name"
+      label="歌曲名称"
+      width="100px">
+    </el-table-column>
+    <el-table-column
+      prop="singer"
+      label="歌手"
+      width="100px">
+    </el-table-column>
+    <el-table-column
+      prop="num"
+      label="收听人数"
+      width="100px">
+    </el-table-column>
+    <el-table-column
+      prop="url"
+      label="地址"
+       width="300px"
+     > 
+    </el-table-column>
+    <el-table-column
+      prop="brand"
+      label="标签"
+      width="100px"
+     >
+    </el-table-column>
+ <el-table-column
+      fixed="right"
+      label="播放"
+      width="120px">
+      <div class="buy">
+                        
+                             </div>
+    </el-table-column>
+  </el-table>
+      </el-main>
+      
+    </el-container>
+  </el-container>
+</el-container>
+
+  
+  
+
+    
+   
+</div>
+
+</body>
+<script type="text/javascript" th:src="@{../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../store/store.js}"></script>
+<script type="text/javascript" th:src="@{../js/Userindex.js}"></script>
+</html>
