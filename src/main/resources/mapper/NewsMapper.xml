@@ -25,7 +25,7 @@
     <!-- 添加数据 -->
     <insert id="create" parameterType="cn.tycoding.entity.News">
         INSERT INTO news(title, content, img, new_date)
-        VALUES(#{title}, #{content}, #{img}, #{new_date})
+        VALUES(#{title}, #{content}, #{img}, now())
     </insert>
 
     <!-- 更新数据 -->

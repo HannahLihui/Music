@@ -33,6 +33,7 @@
         <el-col>
             <el-card shadow="hover">
                 <!-- 搜索框 -->
+                 
                 <el-form :inline="true" :model="searchEntity" class="demo-form-inline">
                     <el-form-item label="名字">
                         <el-input v-model="searchEntity.brand" placeholder="名字"></el-input>
@@ -111,7 +112,7 @@
                             width="250">
                     </el-table-column>
                     
-                   
+                  
                     <el-table-column align="center" label="新闻图片" width="240">
                         <template scope="scope">
                             <img :src="scope.row.img" class="image" width="150" height="160"/>
@@ -153,9 +154,9 @@
                 <el-input v-model="editor.title" placeholder="商品标题"
                           auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="price" label="收听人数" class="is-required"
-                          :rules="[{ required: true, message: '商家价格不能为空'},{ type: 'number', message: '商品价格必须是数字'}]">
-                <el-input v-model.number="editor.price" placeholder="收听人数"
+            <el-form-item prop="content" label="新闻内容" class="is-required"
+                          :rules="[{ required: true, message: '商家内容不能为空'}]">
+                <el-input v-model.number="editor.content" placeholder="新闻内容"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item prop="picture" label="图片">
@@ -178,11 +179,7 @@
                     <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
             </el-form-item>
-            <el-form-item prop="brand" label="商品品牌" class="is-required"
-                          :rules="[{ required: true, message: '商品品牌不能为空'}]">
-                <el-input v-model="editor.brand" placeholder="商品品牌"
-                          auto-complete="off"></el-input>
-            </el-form-item>
+           
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="showSave = false">取 消</el-button>
@@ -200,9 +197,9 @@
                 <el-input v-model="editor.title" placeholder="新闻标题"
                           auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="price" label="收听人数" class="is-required"
-                          :rules="[{ required: true, message: '商家价格不能为空'},{ type: 'number', message: '商品价格必须是数字'}]">
-                <el-input v-model.number="editor.price" placeholder="收听人数"
+            <el-form-item prop="content" label="新闻内容" class="is-required"
+                          :rules="[{ required: true, message: '商家内容不能为空'}]">
+                <el-input v-model.number="editor.content" placeholder="新闻内容"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item prop="picture" label="图片">
@@ -224,11 +221,6 @@
                 <el-dialog :visible.sync="dialogVisible">
                     <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
-            </el-form-item>
-            <el-form-item prop="brand" label="商品品牌" class="is-required"
-                          :rules="[{ required: true, message: '商品品牌不能为空'}]">
-                <el-input v-model="editor.brand" placeholder="商品品牌"
-                          auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">

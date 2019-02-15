@@ -47,4 +47,10 @@ public class NewsServiceImpl implements NewsService{
 		// TODO Auto-generated method stub
 		newsMapper.update(t);
 	}
+
+	@Override
+	public List<News> findByPage(News goods) {
+		// TODO Auto-generated method stub
+		return newsMapper.findByPage(goods);
+	}
 }

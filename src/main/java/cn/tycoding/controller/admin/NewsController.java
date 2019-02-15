@@ -20,6 +20,11 @@ import cn.tycoding.service.NewsService;
 public class NewsController {
 	 @Autowired
 	    private NewsService newsService;
+	 
+	  @RequestMapping("/findByConPage")
+	    public List<News> findByConPage(News goods) {
+	        return newsService.findByPage(goods);
+	    }
 	 @RequestMapping("/create")
 	    public Result create(@RequestBody News goods) {
 	        try {

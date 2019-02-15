@@ -13,7 +13,7 @@ import cn.tycoding.entity.News;
 public interface NewsMapper {
 	   List<News> findAll();
 
-	    Page<News> findByPage(News n);
+	    List<News> findByPage(News n);
 
 	    List<News> findById(Long id);
 

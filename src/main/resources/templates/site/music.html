@@ -166,13 +166,18 @@
                 <el-input v-model="editor.name" placeholder="音乐名称"
                           auto-complete="off"></el-input>
             </el-form-item>
+             <el-form-item prop="singer" label="歌手" class="is-required"
+                          :rules="[{ required: true, message: '歌手不能为空'}]">
+                <el-input v-model="editor.singer" placeholder="歌手名称"
+                          auto-complete="off"></el-input>
+            </el-form-item>
             <el-form-item prop="num" label="收听人数" class="is-required"
                           :rules="[{ required: true, message: ''},{ type: 'number', message: '必须是数字'}]">
                 <el-input v-model.number="editor.num" placeholder="收听人数"
                           auto-complete="off"></el-input>
             </el-form-item>
-             <el-form-item prop="brand" label="音乐链接地址" class="is-required"
-                          :rules="[{ required: true, message: ''},{ type: 'number', message: '必须是数字'}]">
+             <el-form-item prop="url" label="音乐链接地址" class="is-required"
+                          :rules="[{ required: true, message: ''}]">
                 <el-input v-model.number="editor.url" placeholder="音乐链接地址"
                           auto-complete="off"></el-input>
             </el-form-item>
@@ -197,8 +202,8 @@
                 </el-dialog>
             </el-form-item>
             <el-form-item prop="brand" label="音乐分类" class="is-required"
-                          :rules="[{ required: true, message: '商品品牌不能为空'}]">
-                <el-input v-model="editor.brand" placeholder="商品品牌"
+                          :rules="[{ required: true, message: '音乐类型不能为空'}]">
+                <el-input v-model="editor.brand" placeholder="音乐类型"
                           auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
@@ -213,14 +218,24 @@
                :close-on-press-escape="false">
         <el-form class="editor-form" :model="editor" status-icon ref="editor"
                  label-width="100px">
-            <el-form-item prop="title" label="音乐名称" class="is-required"
-                          :rules="[{ required: true, message: '音乐名称不能为空'}]">
-                <el-input v-model="editor.title" placeholder="音乐"
+            <el-form-item prop="name" label="音乐名称" class="is-required"
+                          :rules="[{ required: true, message: '音乐标题不能为空'}]">
+                <el-input v-model="editor.name" placeholder="音乐名称"
                           auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="price" label="收听人数" class="is-required"
+            <el-form-item prop="singer" label="歌手" class="is-required"
+                          :rules="[{ required: true, message: '歌手不能为空'}]">
+                <el-input v-model="editor.singer" placeholder="歌手名称"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="num" label="收听人数" class="is-required"
                           :rules="[{ required: true, message: ''},{ type: 'number', message: '必须是数字'}]">
                 <el-input v-model.number="editor.num" placeholder="收听人数"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+             <el-form-item prop="url" label="音乐链接地址" class="is-required"
+                          :rules="[{ required: true, message: ''}]">
+                <el-input v-model.number="editor.url" placeholder="音乐链接地址"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item prop="picture" label="图片">
@@ -243,9 +258,9 @@
                     <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
             </el-form-item>
-            <el-form-item prop="brand" label="商品品牌" class="is-required"
-                          :rules="[{ required: true, message: '商品品牌不能为空'}]">
-                <el-input v-model="editor.brand" placeholder="商品品牌"
+             <el-form-item prop="brand" label="音乐分类" class="is-required"
+                          :rules="[{ required: true, message: '音乐类型不能为空'}]">
+                <el-input v-model="editor.brand" placeholder="音乐类型"
                           auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
